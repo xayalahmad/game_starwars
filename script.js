@@ -45,31 +45,32 @@ class Container {
       $(area).append(playerCard)
     }
 
-    start = function(){
+    start(){
       for(var i in players){
         gamesPlayers(players[i], "#characters-section")
       }
     }
-    start()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-});
+    selectPlayer1(myPlayer, myArea){
+      $(myArea).empty()
+      this.gamesPlayers(myPlayer, myArea)
+    }
+    selectPlayer2(AllPlayer2){
+      for(var i=0;i<AllPlayer2.length;i++){}
+      this.gamesPlayers(AllPlayer2[i], "#available-to-attack-section")
+    }
+    restart(){
+      $("<button>Restart</button>").on("click", function(){
+        location.reload()
+      })
+      $("body").append($("<button>Restart</button>"))
+    }
+    message(mess) {
+      var messageSection = $("#game-message")
+      var message = $("<div>").text(mess)
+      messageSection.append(message)
+    }
+    reloadMessage(){
+      $("#game-message").text("")
+    }
+};
   
