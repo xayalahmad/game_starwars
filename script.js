@@ -1,5 +1,11 @@
-$(document).ready(function() {
-    var players = {
+class Container {
+  allPlayers = []
+  player1
+  player2
+  player1win = 1
+  player1lose = 0
+
+    players = {
       "Obi-Wan Kenobi": {
         name: "Obi-Wan Kenobi",
         health: 120,
@@ -30,21 +36,21 @@ $(document).ready(function() {
       }
     };
 
-    var gamesPlayers = function(player, area){
-      var playerCard = $("<div class='playerBox character'>")
-      var playerName = $("<div class='playerName character-name'>").text(player.name)
-      var playerImg = $("<img class='playerImg character-image'>").attr("src", player.imageUrl)
-      var playerScore = $("<div class='playerScore character-health'>").text(player.health)
+    gamesPlayers (player, area){
+      playerCard = $("<div class='playerBox character'>")
+      playerName = $("<div class='playerName character-name'>").text(player.name)
+      playerImg = $("<img class='playerImg character-image'>").attr("src", player.imageUrl)
+      playerScore = $("<div class='playerScore character-health'>").text(player.health)
       playerCard.append(playerName).append(playerImg).append(playerScore)
       $(area).append(playerCard)
     }
 
-    var startingGame = function(){
+    start = function(){
       for(var i in players){
         gamesPlayers(players[i], "#characters-section")
       }
     }
-    startingGame()
+    start()
 
 
 
