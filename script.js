@@ -2,7 +2,7 @@ class Container {
   allPlayers = []
   player1
   player2
-  player1win = 1
+  power = 1
   player1lose = 0
 
     players = {
@@ -90,10 +90,39 @@ $("#characters-section").on("click", ".character",function(){
       }
     }
   }
-
         startGame.selectPlayer1(startGame.player1, "#selected-character")
         startGame.selectPlayer2(startGame.allPlayers)
         $("#characters-section").hide();
-
-
 })
+
+$("#available-to-attack-section").on("click", ".character", function () {
+  var plName = $(this).data("hero");
+
+
+  if (startGame.player2 !== null) {
+
+    startGame.player2 = startGame.players[plName]
+
+    startGame.chooseHero(startGame.player2, "#defender")
+    $(this).remove()
+
+    startGame.clearMessage()
+  }
+});
+
+$("#attack-button").on("click", function () {
+
+  startGame.power++
+
+  startGame.player2.health -= startGame.player1.attack * startGame.power
+  startGame.player1.health -= startGame.player2.attack
+
+  startGame.selectPlayer1(startGame.player1, "#selected-character")
+  startGame.selectPlayer1(startGame.player2, "#defender")
+
+  if (startGame.player2.health <= 0 || startGame.player1.health <= 0) {
+    startGame.restartGame();
+    
+    $("#attack-button").off("click");
+  }
+});
