@@ -37,19 +37,20 @@ class Container {
     };
 
     gamesPlayers (player, area){
-      playerCard = $("<div class='playerBox character'>")
-      playerName = $("<div class='playerName character-name'>").text(player.name)
-      playerImg = $("<img class='playerImg character-image'>").attr("src", player.imageUrl)
-      playerScore = $("<div class='playerScore character-health'>").text(player.health)
+      let playerCard = $(`<div data-hero="${this.allPlayers.name}" class='playerBox character'>`)
+      let playerName = $("<div class='playerName character-name'>").text(player.name)
+      let playerImg = $("<img class='playerImg character-image'>").attr("src", player.imageUrl)
+      let playerScore = $("<div class='playerScore character-health'>").text(player.health)
       playerCard.append(playerName).append(playerImg).append(playerScore)
       $(area).append(playerCard)
     }
 
-    start(){
-      for(var i in players){
-        gamesPlayers(players[i], "#characters-section")
+    start() {
+      for(var i in this.allPlayers){
+        this.gamesPlayers(this.allPlayers[i], "#characters-section")
       }
     }
+
     selectPlayer1(myPlayer, myArea){
       $(myArea).empty()
       this.gamesPlayers(myPlayer, myArea)
@@ -74,3 +75,25 @@ class Container {
     }
 };
   
+
+
+let startGame = new Container()
+startGame.start()
+
+$("#characters-section").on("click", ".character",function(){
+  playerName = $(this).data("hero");
+  if(startGame.player1 !== null){ 
+    startGame.player1 = startGame.players[player]
+    for(i in startGame.players){
+      if(playerName !== startGame.players[i].name){
+        startGame.allPlayers.push(startGame.players[i])
+      }
+    }
+  }
+
+        startGame.selectPlayer1(startGame.player1, "#selected-character")
+        startGame.selectPlayer2(startGame.allPlayers)
+        $("#characters-section").hide();
+
+
+})
