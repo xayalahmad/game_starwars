@@ -112,9 +112,7 @@ $("#available-to-attack-section").on("click", ".character", function () {
   var plName = $(this).data("hero");
 
   if (startGame.player2 !== null) {
-
     startGame.player2 = startGame.players[plName]
-
     startGame.selectPlayer1(startGame.player2, "#defender")
     $(this).remove()
 
