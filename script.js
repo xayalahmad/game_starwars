@@ -44,18 +44,7 @@ class Container {
       playerCard.append(playerName).append(playerImg).append(playerScore)
       $(area).append(playerCard)
     }
-    
-    // gamesPlayers(player, area) {
-    //   var playerCard = $(`<div class='character' data-hero='${player.name}'>`);
-    //   var playerName = $("<div class='character-name'>");
-    //   playerName.text(player.name);
-    //   var playerImg = $("<img alt='image' class='character-image'>");
-    //   playerImg.attr("src", player.imageUrl);
-    //   var playerScore = $("<div class='character-health'>");
-    //   playerScore.text(player.health);
-    //   playerCard.append(playerName, playerImg, playerScore);
-    //   $(area).append(playerCard);
-    // }
+
 
     start() {
       for(var i in this.players){
@@ -67,8 +56,9 @@ class Container {
       this.gamesPlayers(myPlayer, myArea)
     }
     selectPlayer2(AllPlayer2){
-      for(var i=0; i < AllPlayer2.length; i++){}
-      this.gamesPlayers(AllPlayer2[i], "#available-to-attack-section")
+      for(var i=0; i < AllPlayer2.length; i++){
+        this.gamesPlayers(AllPlayer2[i], "#available-to-attack-section")
+      }
     }
     restart(){
       var resBtn = $("<button>Restart</button>")
@@ -94,7 +84,7 @@ $("#characters-section").on("click", ".character", function(){
   if(startGame.player1 !== null){ 
     startGame.player1 = startGame.players[playerName]
     
-    for(i in startGame.players){
+    for(var i in startGame.players){
       if(playerName !== startGame.players[i].name){
         startGame.allPlayers.push(startGame.players[i])
       }
@@ -116,7 +106,7 @@ $("#available-to-attack-section").on("click", ".character", function () {
     startGame.selectPlayer1(startGame.player2, "#defender")
     $(this).remove()
 
-    startGame.clearMessage()
+    // startGame.clearMessage()
   }   
 });
 
@@ -136,5 +126,3 @@ $("#attack-button").on("click", function () {
     $("#attack-button").off("click");
   }
 });
-
-
