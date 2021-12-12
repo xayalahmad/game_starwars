@@ -1,11 +1,6 @@
 class Container {
-  allPlayers = []
-  player1
-  player2
-  power = 1
-  player1lose = 0
-
-    players = {
+  
+  players = {
       "Obi-Wan Kenobi": {
         name: "Obi-Wan Kenobi",
         health: 120,
@@ -35,35 +30,52 @@ class Container {
         enemyAttackBack: 25
       }
     };
-
-    gamesPlayers (player, area){
-      let playerCard = $(`<div data-hero="${this.allPlayers.name}" class='playerBox character'>`)
+    
+    allPlayers = []
+    player1
+    player2
+    power = 1
+    player1lose = 0
+    gamesPlayers(player, area){
+      let playerCard = $(`<div data-hero='${player.name}' class='character'>`)
       let playerName = $("<div class='playerName character-name'>").text(player.name)
       let playerImg = $("<img class='playerImg character-image'>").attr("src", player.imageUrl)
       let playerScore = $("<div class='playerScore character-health'>").text(player.health)
       playerCard.append(playerName).append(playerImg).append(playerScore)
       $(area).append(playerCard)
     }
+    
+    // gamesPlayers(player, area) {
+    //   var playerCard = $(`<div class='character' data-hero='${player.name}'>`);
+    //   var playerName = $("<div class='character-name'>");
+    //   playerName.text(player.name);
+    //   var playerImg = $("<img alt='image' class='character-image'>");
+    //   playerImg.attr("src", player.imageUrl);
+    //   var playerScore = $("<div class='character-health'>");
+    //   playerScore.text(player.health);
+    //   playerCard.append(playerName, playerImg, playerScore);
+    //   $(area).append(playerCard);
+    // }
 
     start() {
-      for(var i in this.allPlayers){
-        this.gamesPlayers(this.allPlayers[i], "#characters-section")
+      for(var i in this.players){
+        this.gamesPlayers(this.players[i], "#characters-section")
       }
     }
-
     selectPlayer1(myPlayer, myArea){
       $(myArea).empty()
       this.gamesPlayers(myPlayer, myArea)
     }
     selectPlayer2(AllPlayer2){
-      for(var i=0;i<AllPlayer2.length;i++){}
+      for(var i=0; i < AllPlayer2.length; i++){}
       this.gamesPlayers(AllPlayer2[i], "#available-to-attack-section")
     }
     restart(){
-      $("<button>Restart</button>").on("click", function(){
+      var resBtn = $("<button>Restart</button>")
+      resBtn.click(function(){
         location.reload()
       })
-      $("body").append($("<button>Restart</button>"))
+      $("body").append(resBtn)
     }
     message(mess) {
       var messageSection = $("#game-message")
@@ -74,20 +86,21 @@ class Container {
       $("#game-message").text("")
     }
 };
-  
-
-
 let startGame = new Container()
 startGame.start()
 
-$("#characters-section").on("click", ".character",function(){
-  playerName = $(this).data("hero");
+$("#characters-section").on("click", ".character", function(){
+  var playerName = $(this).data("hero");
   if(startGame.player1 !== null){ 
-    startGame.player1 = startGame.players[player]
+    startGame.player1 = startGame.players[playerName]
+    
     for(i in startGame.players){
       if(playerName !== startGame.players[i].name){
         startGame.allPlayers.push(startGame.players[i])
       }
+      console.log(playerName)
+      console.log(startGame.players[i].name)
+
     }
   }
         startGame.selectPlayer1(startGame.player1, "#selected-character")
@@ -98,16 +111,15 @@ $("#characters-section").on("click", ".character",function(){
 $("#available-to-attack-section").on("click", ".character", function () {
   var plName = $(this).data("hero");
 
-
   if (startGame.player2 !== null) {
 
     startGame.player2 = startGame.players[plName]
 
-    startGame.chooseHero(startGame.player2, "#defender")
+    startGame.selectPlayer1(startGame.player2, "#defender")
     $(this).remove()
 
     startGame.clearMessage()
-  }
+  }   
 });
 
 $("#attack-button").on("click", function () {
@@ -121,8 +133,10 @@ $("#attack-button").on("click", function () {
   startGame.selectPlayer1(startGame.player2, "#defender")
 
   if (startGame.player2.health <= 0 || startGame.player1.health <= 0) {
-    startGame.restartGame();
+    startGame.restart();
     
     $("#attack-button").off("click");
   }
 });
+
+
