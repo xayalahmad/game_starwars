@@ -65,7 +65,7 @@ class Container {
       resBtn.click(function(){
         location.reload()
       })
-      $("body").append(resBtn)
+      $("#buttonarea").html(resBtn)
     }
     message(mess) {
       var messageSection = $("#game-message")
@@ -105,7 +105,6 @@ $("#available-to-attack-section").on("click", ".character", function () {
     startGame.player2 = startGame.players[plName]
     startGame.selectPlayer1(startGame.player2, "#defender")
     $(this).remove()
-
     // startGame.clearMessage()
   }   
 });
@@ -121,8 +120,13 @@ $("#attack-button").on("click", function () {
   startGame.selectPlayer1(startGame.player2, "#defender")
 
   if (startGame.player2.health <= 0 || startGame.player1.health <= 0) {
-    startGame.restart();
+    alert(`Your win. ${startGame.player2.name} is lose. Please choose new defender`)
+    $("#defender").empty()
     
-    $("#attack-button").off("click");
+    $("#defender").text = ""
+    
+      startGame.restart();
+    
+    // $("#attack-button").off("click");
   }
 });
